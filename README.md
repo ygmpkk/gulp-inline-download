@@ -24,7 +24,7 @@ gulp.src('./test/test.html')
 			}
 		}
 	}))
-	.pipe('./dist')
+	.pipe(gulp.dest('./dist'))
 ```
 
 it can replace your `<link>` and `<script>` uglified with the corresponding inlined files.
