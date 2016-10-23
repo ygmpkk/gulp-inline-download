@@ -31,6 +31,16 @@
     "url": "https://github.com/erasermeng/gulp-inline-download/issues"
   },
   "homepage": "https://github.com/erasermeng/gulp-inline-download#readme",
+  "dependencies": {
+    "async": "^2.1.2",
+    "cheerio": "^0.22.0",
+    "gulp": "^3.9.1",
+    "gulp-clean-css": "^2.0.13",
+    "gulp-download": "0.0.1",
+    "gulp-uglify": "^2.0.0",
+    "gulp-util": "^3.0.7",
+    "through2": "^2.0.1"
+  },
   "devDependencies": {
     "async": "^2.1.2",
     "cheerio": "^0.22.0",
