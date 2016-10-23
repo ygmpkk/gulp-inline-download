@@ -11,10 +11,6 @@ var uglify = require('gulp-uglify');
 var minify = require('gulp-clean-css');
 var url = require('url');
 
-
-var htmlStr = fs.readFileSync('./test/test.html');
-
-
 var typeMap = {
   css: {
     tag: 'link',
