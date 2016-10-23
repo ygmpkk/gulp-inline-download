@@ -48,16 +48,16 @@ var typeMap = {
 };
 
 function inline($, opts, relative, done) {
-	//TODO 处理HTML文件，替换link、script等标签	
+
 	var sign = opts.sign || 'inline';
 
 	each(typeMap, function(data, cb){
 		var el = $(data.tag);
 
-		//遍历每一个标签，对每个标签进行替换
+		//inject every proper tag
 		each(el, function(el, cb) {
 			if (filter($(el), sign)) {
-				//符合条件，进行替换
+				
 				var stream = null,
 					src = data.getSrc($(el));
 				if (isRemote(src)) {
@@ -72,7 +72,8 @@ function inline($, opts, relative, done) {
 					stream = stream.pipe(uglify(opts['uglify'].js));
 				}
 
-				//替换标签
+				//replace tag with file contents
+				//now $ is changed
 				stream.pipe(replace($(el), data.template, cb));
 
 			} else {
@@ -113,6 +114,7 @@ module.exports = function(opts) {
 	})
 }
 
+//some utils
 function replace (el, tmpl, callback) {
   return through.obj(function (file, enc, cb) {
     el.replaceWith(tmpl(String(file.contents), el))

@@ -14,9 +14,16 @@
     "url": "git+https://github.com/erasermeng/gulp-inline-download.git"
   },
   "keywords": [
-    "gulp",
     "inline",
-    "download"
+    "gulp",
+    "gulpplugin",
+    "gulp inline",
+    "inline css",
+    "inline js",
+    "compress html",
+    "inline download",
+    "inline net",
+    "inline remote"
   ],
   "author": "erasermeng",
   "license": "MIT",
