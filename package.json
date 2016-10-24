@@ -1,6 +1,6 @@
 {
   "name": "gulp-inline-download",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "gulp inline support download remote js/css file",
   "main": "index.js",
   "directories": {
