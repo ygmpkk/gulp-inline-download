@@ -47,19 +47,25 @@ function inline($, opts, relative, done) {
 
 	var sign = opts.sign || 'inline';
 
-	each(typeMap, function(data, cb){
+	each(typeMap, function(data, callback){
 		var el = $(data.tag);
 
 		//inject every proper tag
 		each(el, function(el, cb) {
 			if (filter($(el), sign)) {
+				console.log('通过')
 				
 				var stream = null,
 					src = data.getSrc($(el));
+					console.log(src);
 				if (isRemote(src)) {
 					stream = download(src);
 				} else {
-					stream = gulp.src(path.resolve(relative, src));
+					if (fs.existsSync(path.resolve(relative, src))) {
+						stream = gulp.src(path.resolve(relative, src));
+					} else {
+						return cb();
+					}
 				}
 
 				if (data.tag == 'link' && opts['uglify'] && opts['uglify'].css) {
@@ -77,11 +83,12 @@ function inline($, opts, relative, done) {
 			}
 		}, function(err) {
 			if (err) throw new PluginError(err) ;
-			cb();
+			callback();
 		});
 
 	}, function(err) {
 		if (err) throw new PluginError(err) ;
+		console.log('这里没有执行')
 		done();
 	})
 }
@@ -98,6 +105,7 @@ module.exports = function(opts) {
 	    if (file.isBuffer()) {
 	    	var $ = cheerio.load(String(file.contents), {decodeEntities: false});
 	    	inline($, opts, path.dirname(file.path), function() {
+	    		console.log('到这里了')
 	    		file.contents = new Buffer($.html());
 	      		self.push(file);
 	      		cb();
@@ -113,10 +121,11 @@ module.exports = function(opts) {
 //some utils
 function replace (el, tmpl, callback) {
   return through.obj(function (file, enc, cb) {
-    el.replaceWith(tmpl(String(file.contents), el))
-    this.push(file)
-    cb()
-    callback()
+  	console.log(file.contents	)
+    el.replaceWith(tmpl(String(file.contents), el));
+    this.push(file);
+    cb();
+    callback();
   })
 }
 
