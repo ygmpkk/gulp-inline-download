@@ -10,6 +10,7 @@ var download = require('gulp-download');
 var uglify = require('gulp-uglify');
 var minify = require('gulp-clean-css');
 var url = require('url');
+var stripDebug = require('gulp-strip-debug');
 
 var typeMap = {
   css: {
@@ -69,8 +70,12 @@ function inline($, opts, relative, done) {
 				if (data.tag == 'link' && opts['uglify'] && opts['uglify'].css) {
 					stream = stream.pipe(minify(opts['uglify'].css));
 				} else if (data.tag == 'script' && opts['uglify'] && opts['uglify'].js) {
-					stream = stream.pipe(uglify(opts['uglify'].js));
+					//remove debug
+					stream = stream.pipe(stripDebug())
+							.pipe(uglify(opts['uglify'].js));
 				}
+
+
 
 				//replace tag with file contents
 				//now $ is changed
