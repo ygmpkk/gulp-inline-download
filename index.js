@@ -53,11 +53,9 @@ function inline($, opts, relative, done) {
 		//inject every proper tag
 		each(el, function(el, cb) {
 			if (filter($(el), sign)) {
-				console.log('通过')
 				
 				var stream = null,
 					src = data.getSrc($(el));
-					console.log(src);
 				if (isRemote(src)) {
 					stream = download(src);
 				} else {
@@ -88,7 +86,6 @@ function inline($, opts, relative, done) {
 
 	}, function(err) {
 		if (err) throw new PluginError(err) ;
-		console.log('这里没有执行')
 		done();
 	})
 }
@@ -105,7 +102,6 @@ module.exports = function(opts) {
 	    if (file.isBuffer()) {
 	    	var $ = cheerio.load(String(file.contents), {decodeEntities: false});
 	    	inline($, opts, path.dirname(file.path), function() {
-	    		console.log('到这里了')
 	    		file.contents = new Buffer($.html());
 	      		self.push(file);
 	      		cb();
@@ -121,11 +117,11 @@ module.exports = function(opts) {
 //some utils
 function replace (el, tmpl, callback) {
   return through.obj(function (file, enc, cb) {
-  	console.log(file.contents	)
     el.replaceWith(tmpl(String(file.contents), el));
     this.push(file);
     cb();
     callback();
+    console.log(path.basename(file.path) + ' has been injected.');
   })
 }
 
